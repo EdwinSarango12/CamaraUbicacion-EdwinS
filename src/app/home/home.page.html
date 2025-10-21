@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Fotos con Ubicación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Información de ubicación actual -->
+  <ion-card *ngIf="latitude() !== null && longitude() !== null">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="location" color="primary"></ion-icon>
+        Ubicación Actual
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Latitud:</strong> {{ latitude() | number:'1.6-6' }}</p>
+      <p><strong>Longitud:</strong> {{ longitude() | number:'1.6-6' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Información para navegador -->
+  <ion-card color="info">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="information-circle" color="primary"></ion-icon>
+        Información Importante
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Para usuarios del navegador:</strong></p>
+      <p>• Si no puedes acceder a la cámara, usa "Seleccionar de Galería"</p>
+      <p>• Para habilitar la cámara, haz clic en el ícono de cámara en la barra de direcciones</p>
+      <p>• La ubicación se obtendrá automáticamente al seleccionar una foto</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mensaje de error -->
+  <ion-card *ngIf="errorMsg()" color="danger">
+    <ion-card-content>
+      <p>{{ errorMsg() }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de fotos -->
+  <ion-list *ngIf="photos().length > 0">
+    <ion-item *ngFor="let photo of photos()" class="photo-item">
+      <ion-img [src]="photo.photo.webPath || photo.photo.path" 
+               slot="start" 
+               class="photo-thumbnail">
+      </ion-img>
+      
+      <ion-label>
+        <h2>{{ formatDate(photo.timestamp) }}</h2>
+        <p><strong>Coordenadas:</strong> {{ photo.latitude | number:'1.6-6' }}, {{ photo.longitude | number:'1.6-6' }}</p>
+        <p>
+          <ion-button fill="clear" size="small" (click)="openGoogleMaps(photo.googleMapsUrl)">
+            <ion-icon name="location" slot="start"></ion-icon>
+            Ver en Google Maps
+          </ion-button>
+        </p>
+      </ion-label>
+
+      <ion-button fill="clear" color="danger" slot="end" (click)="confirmDeletePhoto(photo.id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay fotos -->
+  <ion-card *ngIf="photos().length === 0 && cameraPermissionsGranted()">
+    <ion-card-content class="ion-text-center">
+      <ion-icon name="camera" size="large" color="medium"></ion-icon>
+      <h3>No hay fotos guardadas</h3>
+      <p>Toca el botón de la cámara para tomar tu primera foto con ubicación</p>
+      <ion-button expand="block" fill="outline" (click)="selectFromGallery()" [disabled]="isTakingPhoto()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Seleccionar de Galería
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botones de acción cuando hay fotos -->
+  <ion-card *ngIf="photos().length > 0">
+    <ion-card-content>
+      <ion-button expand="block" fill="outline" (click)="selectFromGallery()" [disabled]="isTakingPhoto()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Agregar Foto de Galería
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón flotante para opciones de foto -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showPhotoOptions()" [disabled]="isTakingPhoto()">
+      <ion-spinner *ngIf="isTakingPhoto()" name="crescent"></ion-spinner>
+      <ion-icon *ngIf="!isTakingPhoto()" name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Alerta de confirmación para eliminar -->
+  <ion-alert
+    [isOpen]="showDeleteAlert()"
+    header="Confirmar eliminación"
+    message="¿Estás seguro de que quieres eliminar esta foto?"
+    [buttons]="alertButtons">
+  </ion-alert>
+
+  <!-- Action Sheet para opciones de foto -->
+  <ion-action-sheet
+    [isOpen]="showActionSheet()"
+    header="Seleccionar opción"
+    [buttons]="actionSheetButtons"
+    (didDismiss)="closeActionSheet()">
+  </ion-action-sheet>
+</ion-content>
