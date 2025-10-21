@@ -4,11 +4,11 @@ Esta aplicación permite tomar fotos y guardar automáticamente la ubicación GP
 
 ## Características
 
-- 📸 **Captura de fotos**: Toma fotos usando la cámara del dispositivo
-- 📍 **Geolocalización**: Obtiene automáticamente las coordenadas GPS
-- 💾 **Guardado en archivo**: Guarda la información en archivos de texto
-- 🗺️ **Enlaces a Google Maps**: Acceso directo a la ubicación en Google Maps
-- 📱 **Interfaz moderna**: Diseño limpio y fácil de usar
+- **Captura de fotos**: Toma fotos usando la cámara del dispositivo
+- **Geolocalización**: Obtiene automáticamente las coordenadas GPS
+- **Guardado en archivo**: Guarda la información en archivos de texto
+- **Enlaces a Google Maps**: Acceso directo a la ubicación en Google Maps
+- **Interfaz moderna**: Diseño limpio y fácil de usar
 
 ## Instalación
 
@@ -19,32 +19,6 @@ Esta aplicación permite tomar fotos y guardar automáticamente la ubicación GP
 - Ionic CLI
 - Capacitor CLI
 
-### Pasos de instalación
-
-1. **Instalar dependencias**:
-   ```bash
-   npm install
-   ```
-
-2. **Instalar plugins de Capacitor**:
-   ```bash
-   npx cap sync
-   ```
-
-3. **Para Android**:
-   ```bash
-   npx cap add android
-   npx cap sync android
-   npx cap open android
-   ```
-
-4. **Para iOS** (solo en macOS):
-   ```bash
-   npx cap add ios
-   npx cap sync ios
-   npx cap open ios
-   ```
-
 ## Uso
 
 ### Funcionalidades principales
@@ -54,20 +28,28 @@ Esta aplicación permite tomar fotos y guardar automáticamente la ubicación GP
    - La aplicación tomará la foto y obtendrá automáticamente tu ubicación GPS
    - La foto se guardará junto con las coordenadas
 
+![inicio](https://github.com/user-attachments/assets/2c6c5bb4-3237-42ca-9020-b29d7398665a)
+
 2. **Ver fotos guardadas**:
    - Las fotos aparecen en una lista con:
      - Miniatura de la foto
      - Fecha y hora de captura
      - Coordenadas GPS
      - Botón para abrir en Google Maps
+    
+![galeria](https://github.com/user-attachments/assets/f5098c74-1e15-4d6b-ade6-e57c72857b88)
 
 3. **Acceder a Google Maps**:
    - Toca el botón "Ver en Google Maps" en cualquier foto
    - Se abrirá Google Maps mostrando la ubicación exacta
 
+![mapa](https://github.com/user-attachments/assets/4275a6e4-c5ec-44f9-8275-2b6d9d38b1c9)
+
 4. **Eliminar fotos**:
-   - Toca el botón de eliminar (🗑️) en cualquier foto
+   - Toca el botón de eliminar (X) en cualquier foto
    - Confirma la eliminación en el diálogo
+
+![elimina](https://github.com/user-attachments/assets/addab978-e25a-4c0a-af59-598f4c3a0b55)
 
 ### Archivos generados
 
@@ -145,7 +127,3 @@ npx cap sync
 ### Los archivos no se guardan
 - Verifica que se hayan concedido los permisos de almacenamiento
 - En Android, verifica que la aplicación tenga acceso al almacenamiento
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT.
